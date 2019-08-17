@@ -1,0 +1,32 @@
+{
+  "name": "@salilvnair/react-httpclient",
+  "version": "1.0.0",
+  "description": "React HttpClient inspired by the Angular HttpClient , created using axios and RxJs 6",
+  "main": "public/public_api.js",
+  "types": "public/public_api.d.ts",
+  "scripts": {
+    "test": "node ./public/test/main.js",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salilvnair/react-httpclient.git"
+  },
+  "keywords": [
+    "httpclient",
+    "react"
+  ],
+  "author": "salilvnair",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/salilvnair/react-httpclient/issues"
+  },
+  "homepage": "https://github.com/salilvnair/react-httpclient#readme",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "rxjs": "^6.5.2"
+  },
+  "files": [
+    "public/**/*"
+  ]
+}
