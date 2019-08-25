@@ -6,8 +6,24 @@ import { Observable } from 'rxjs';
 export class ReactHttpClient {
   private _httpClient: AxiosInstance;
   
-  constructor() {
+  constructor(
+    requestInterceptor?: any,
+    responseInterceptor?: any,
+    errorHandler?: any
+  ) {
     this._httpClient = axios.create();
+    if(requestInterceptor) {
+      this._httpClient.interceptors.request.use(
+        request => requestInterceptor(request),
+        error => errorHandler(error)
+      );
+    }
+    if(responseInterceptor) {
+      this._httpClient.interceptors.response.use(
+        response => responseInterceptor(response),
+        error => errorHandler(error)
+      );
+    }
   }
 
   private _invokeHttpRequest<T>(method: string, url: string, queryParams?: object, body?: object) {
@@ -32,9 +48,16 @@ export class ReactHttpClient {
       default:
         throw new Error('Method not supported');
     }
-    return new Observable<T>(subscriber => {
-      request.then(response => {
-        subscriber.next(response.data);
+    return new Observable<Response>(subscriber => {
+      request.then(axiosResponse => {
+        let response:Response = new Response();
+        let { data, headers, status, statusText, config } = axiosResponse;
+        response.data = data;
+        response.headers = headers;
+        response.status = status;
+        response.statusText = statusText;
+        response.config = config;
+        subscriber.next(response);
         subscriber.complete();
       }).catch((err: Error) => {
         subscriber.error(err);
@@ -62,4 +85,12 @@ export class ReactHttpClient {
   public delete(url: string, queryParams?: object) {
     return this._invokeHttpRequest('DELETE', url, queryParams);
   }
+}
+
+export class Response {
+  data: any;
+  status: number;
+  statusText: string;
+  headers: any;
+  config: any;
 }
