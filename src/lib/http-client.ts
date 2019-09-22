@@ -57,6 +57,9 @@ export class ReactHttpClient {
         response.status = status;
         response.statusText = statusText;
         response.config = config;
+        if(axiosResponse.request) {
+          response.request = axiosResponse.request;
+        }
         subscriber.next(response);
         subscriber.complete();
       }).catch((err: Error) => {
@@ -93,4 +96,5 @@ export class Response {
   statusText: string;
   headers: any;
   config: any;
+  request: any;
 }
