@@ -1,7 +1,8 @@
 import { ReactHttpClient } from '../public_api';
 
 const requestInterceptor = (request) => {
-    request.headers['token'] = 'tokentest12345'
+    request.headers['token'] = 'tokentest12345';
+    return request;
 }
 
 let httpClient = new ReactHttpClient(requestInterceptor);
