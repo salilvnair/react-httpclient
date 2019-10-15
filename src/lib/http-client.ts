@@ -69,6 +69,10 @@ export class ReactHttpClient {
     });
   }
 
+  public config(withCredentials: boolean) {
+    this._httpClient.defaults.withCredentials = withCredentials;
+  }
+
   public get<T>(url: string, queryParams?: object) {
     return this._invokeHttpRequest<T>('GET', url, queryParams);
   }
